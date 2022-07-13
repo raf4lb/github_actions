@@ -6,6 +6,14 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  POSTGRES_NAME: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_HOST: 127.0.0.1
+  POSTGRES_PORT: 5432
+  POSTGRES_DB: postgres
+
 jobs:
   test:
 
@@ -15,11 +23,11 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
+          POSTGRES_DB: $POSTGRES_DB
+          POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+          POSTGRES_USER: $POSTGRES_USER
         ports:
-          - 5432:5432
+          - $POSTGRES_PORT:$POSTGRES_PORT
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -30,18 +38,18 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v3
-    - name: Install Dependencies
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Run Tests
+    - name: Run tests
       env:
-        POSTGRES_NAME: postgres
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_HOST: 127.0.0.1
-        POSTGRES_PORT: 5432
-        POSTGRES_DB: postgres
+        POSTGRES_NAME: $POSTGRES_NAME
+        POSTGRES_USER: $POSTGRES_USER
+        POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+        POSTGRES_HOST: $POSTGRES_HOST
+        POSTGRES_PORT: $POSTGRES_PORT
+        POSTGRES_DB: $POSTGRES_DB
       run: |
         python manage.py test
 
