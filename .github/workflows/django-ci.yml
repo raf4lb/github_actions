@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -44,3 +44,9 @@ jobs:
         POSTGRES_DB: postgres
       run: |
         python manage.py test
+
+  build:
+    needs: test
+    steps:
+      - run: |
+          echo "This is the build job and it depends on test job
