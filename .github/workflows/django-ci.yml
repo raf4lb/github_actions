@@ -49,5 +49,6 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo "This is the build job and it depends on test job
+    - name: Build project
+      run: |
+        echo "This is the build job and it depends on test job"
