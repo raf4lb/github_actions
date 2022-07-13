@@ -16,14 +16,14 @@ env:
 
 jobs:
   test:
-
+    name: Test
     runs-on: ubuntu-latest
 
     services:
       postgres:
         image: postgres:latest
         ports:
-          - ${{ env.POSTGRES_PORT }}:${{ env.POSTGRES_PORT }}
+          - 5432:5432
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
